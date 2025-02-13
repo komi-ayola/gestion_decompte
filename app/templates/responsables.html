@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-1">
+    <h2 class="text-center text-primary">Liste des responsables</h2>
+    
+    <!-- Bouton Ajouter -->
+    <div class="d-flex justify-content-between mb-3">
+        <a href="{{ url_for('main.ajouter_responsable') }}" class="btn btn-success">
+            <i class="fas fa-user-plus"></i> Ajouter un responsable
+        </a>
+    </div>
+
+    <!-- Tableau des Responsables -->
+    <div class="card shadow-lg p-4">
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Fonction</th>
+                    <th>Division</th>
+                    <th>Actif</th>
+                    <th>Intérim</th>
+                    <th>Intérimaire</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for responsable in responsables %}
+                <tr>
+                    <td>{{ responsable.nom }}</td>
+                    <td>{{ responsable.prenom }}</td>
+                    <td>{{ responsable.fonction }}</td>
+                    <td>{{ responsable.division }}</td>
+                    <td>
+                        <span class="badge {% if responsable.actif %}bg-success{% else %}bg-danger{% endif %}">
+                            {{ "Oui" if responsable.actif else "Non" }}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="badge {% if responsable.interim %}bg-warning text-dark{% else %}bg-secondary{% endif %}">
+                            {{ "Oui" if responsable.interim else "Non" }}
+                        </span>
+                    </td>
+                    <td>
+                        {% if responsable.interimaire %}
+                            {{ responsable.interimaire.nom }} {{ responsable.interimaire.prenom }}
+                        {% else %}
+                            <span class="text-muted">Aucun</span>
+                        {% endif %}
+                    </td>
+                    <td class="actions">
+                        <!-- Modifier -->
+                        <a href="{{ url_for('main.modifier_responsable', responsable_id=responsable.id) }}" class="btn btn-warning btn-sm">
+                            <i class="fas fa-edit"></i> Modifier
+                        </a>
+
+                        <!-- Formulaire Activer/Désactiver Intérim -->
+                        <!-- <form action="{{ url_for('main.activer_interim', responsable_id=responsable.id) }}" method="post" class="d-inline">
+                            <select name="interimaire" class="form-select form-select-sm d-inline w-auto" {% if not responsable.interim %}disabled{% endif %}>
+                                <option value="">Sélectionner...</option>
+                                {% for r in responsables %}
+                                    {% if r.id != responsable.id %}   Empêcher l'auto-sélection 
+                                        <option value="{{ r.id }}" {% if responsable.interimaire and responsable.interimaire.id == r.id %}selected{% endif %}>
+                                            {{ r.nom }} {{ r.prenom }}
+                                        </option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                            <button type="submit" class="btn btn-info btn-sm">
+                                {% if responsable.interim %}Désactiver{% else %}Activer{% endif %}
+                            </button>
+                        </form> -->
+
+                        <!-- Supprimer -->
+                        <a href="{{ url_for('main.supprimer_responsable', responsable_id=responsable.id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Supprimer ce responsable ?');">
+                            <i class="fas fa-trash-alt"></i> Supprimer
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <nav aria-label="Pagination">
+            <ul class="pagination justify-content-center">
+                {% if responsables.has_prev %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('main.afficher_responsables', page=responsables.prev_num) }}">Précédent</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link">Précédent</span>
+                    </li>
+                {% endif %}
+
+                {% for num in responsables.iter_pages() %}
+                    {% if num %}
+                        <li class="page-item {% if num == responsables.page %}active{% endif %}">
+                            <a class="page-link" href="{{ url_for('main.afficher_responsables', page=num) }}">{{ num }}</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled"><span class="page-link">...</span></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if responsables.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('main.afficher_responsables', page=responsables.next_num) }}">Suivant</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link">Suivant</span>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+
+        <!-- Bouton Retour -->
+        <div class="text-center mt-3">
+            <a href="/" class="btn btn-primary"><i class="fas fa-home"></i> Retour à l'accueil</a>
+        </div>
+    </div>
+</div>
+
+<!-- Script pour gérer le champ interimaire dynamiquement -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll("form select[name='interimaire']").forEach(select => {
+        let form = select.closest("form");
+        let button = form.querySelector("button[type='submit']");
+
+        function toggleSelect() {
+            if (select.value === "") {
+                button.innerText = "Activer";
+                button.classList.remove("btn-danger");
+                button.classList.add("btn-info");
+            } else {
+                button.innerText = "Désactiver";
+                button.classList.remove("btn-info");
+                button.classList.add("btn-danger");
+            }
+        }
+
+        select.addEventListener("change", toggleSelect);
+        toggleSelect();
+    });
+});
+</script>
+
+{% endblock %}

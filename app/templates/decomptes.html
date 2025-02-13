@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Liste des Décomptes{% endblock %}
+
+{% block content %}
+<div class="container mt-1">
+    <h1 class="text-center text-primary">Liste des décomptes</h1>
+    <div class="d-flex justify-content-between mb-1">
+        <a href="{{ url_for('main.nouveau_decompte') }}" class="btn btn-success">
+            Ajouter un décompte
+        </a>
+    </div>
+    <div class="card shadow-lg p-3 mb-5 w-200">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover mt-1">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Numéro Décompte</th>
+                        <th>Numéro OM</th> 
+                        <th>Date Ordre</th>
+                        <th>Personnel</th>
+                        <th>Classe</th>
+                        <th>Poste</th>
+                        <th>Date Départ</th>
+                        <th>Date Retour</th>
+                        <th>Nombre Jours</th>
+                        <th>Nombre Repas</th>
+                        <th>Nombre Nuitées</th>
+                        <th>Frais Total</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for decompte in decomptes.items %}  
+                    <tr>
+                        <td>{{ decompte.id }}</td>
+                        <td>{{ decompte.numero_ordre }}</td>
+                        <td>{{ decompte.numero_om }}</td>  
+                        <td>{{ decompte.date_ordre.strftime('%d/%m/%Y') }}</td>
+                        <td>{{ decompte.personnel.nom }} {{ decompte.personnel.prenom }}</td>
+                        <td>{{ decompte.personnel.classe }}</td>
+                        <td>{{ decompte.personnel.poste }}</td>
+                        <td>{{ decompte.date_depart.strftime('%d/%m/%Y') }}</td>
+                        <td>{{ decompte.date_retour.strftime('%d/%m/%Y') }}</td>
+                        <td>{{ decompte.nombre_jours }}</td>
+                        <td>{{ decompte.nombre_repas }}</td>
+                        <td>{{ decompte.nombre_nuitees }}</td>
+                        <td>{{ decompte.total_paye|nombre_sans_decimale }} FCFA</td>
+                        <td class="actions">
+                            <a href="{{ url_for('main.modifier_decompte', decompte_id=decompte.id) }}" class="btn btn-warning btn-sm">Modifier</a>
+                            <a href="{{ url_for('main.supprimer_decompte', decompte_id=decompte.id) }}" class="btn btn-danger btn-sm" 
+                                onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce décompte ?');">
+                                Supprimer
+                            </a>
+                            <div class="text-center mt-1">
+                                <a href="{{ url_for('main.generer_pdf', decompte_id=decompte.id) }}" class="btn btn-info btn-sm" target="_blank">
+                                    PDF
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- PAGINATION -->
+        <nav aria-label="Pagination">
+            <ul class="pagination justify-content-center">
+                {% if decomptes.has_prev %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('main.afficher_decomptes', page=decomptes.prev_num) }}">Précédent</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link">Précédent</span>
+                    </li>
+                {% endif %}
+
+                {% for num in decomptes.iter_pages(left_edge=2, right_edge=2, left_current=1, right_current=1) %}
+                    {% if num %}
+                        <li class="page-item {% if num == decomptes.page %}active{% endif %}">
+                            <a class="page-link" href="{{ url_for('main.afficher_decomptes', page=num) }}">{{ num }}</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled"><span class="page-link">...</span></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if decomptes.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('main.afficher_decomptes', page=decomptes.next_num) }}">Suivant</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link">Suivant</span>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+
+        <div class="text-center mt-4">
+            <a href="{{ url_for('main.index') }}" class="btn btn-primary">Retour à l'accueil</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

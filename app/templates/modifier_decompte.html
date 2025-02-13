@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Modifier Décompte{% endblock %}
+
+{% block content %}
+<div class="container mt-1 d-flex justify-content-center">
+    <div class="card p-1 shadow-lg w-75">
+        <h1 class="text-center text-warning">Modifier le décompte n° <br>{{ decompte.numero_ordre }}</h1>
+
+        <form method="POST" action="{{ url_for('main.modifier_decompte', decompte_id=decompte.id) }}" class="mt-4">
+            {{ form.hidden_tag() }}
+
+            <!-- Informations Générales -->
+            <fieldset class="border p-2 mb-1">
+                <legend class="w-auto text-success">Détails du décompte</legend>
+                <div class="row">
+                    <div class="col-md-4 mb-1">
+                        {{ form.numero_om.label }} {{ form.numero_om(class="form-control") }}
+                    </div>
+                    <div class="col-md-3 mb-1">
+                        {{ form.date_ordre.label }} {{ form.date_ordre(class="form-control") }}
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Dates -->
+            <fieldset class="border p-2 mb-1">
+                <legend class="w-auto text-success">Dates</legend>
+                <div class="row">
+                    <div class="col-md-3 mb-1">
+                        {{ form.date_depart.label }} {{ form.date_depart(class="form-control") }}
+                    </div>
+                    <div class="col-md-3 mb-1">
+                        {{ form.date_retour.label }} {{ form.date_retour(class="form-control") }}
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Personnel -->
+            <fieldset class="border p-2 mb-1">
+                <legend class="w-auto text-success">Personnel</legend>
+                <div class="mb-2">
+                    {{ form.personnel.label }} {{ form.personnel(class="form-select") }}
+                </div>
+            </fieldset>
+
+            <!-- Frais -->
+            <fieldset class="border p-2 mb-1">
+                <legend class="w-auto text-success">Frais</legend>
+                <div class="row">
+                    <div class="col-md-3 mb-1">
+                        {{ form.frais_transport_aller.label }} 
+                        {{ form.frais_transport_aller(class="form-control", type="number", step="1", placeholder="0") }}
+                    </div>
+                    <div class="col-md-3 mb-1">
+                        {{ form.frais_transport_retour.label }} 
+                        {{ form.frais_transport_retour(class="form-control", type="number", step="1", placeholder="0") }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 mb-1">
+                        {{ form.frais_peage_aller.label }} 
+                        {{ form.frais_peage_aller(class="form-control", type="number", step="1", placeholder="0") }}
+                    </div>
+                    <div class="col-md-3 mb-1">
+                        {{ form.frais_peage_retour.label }} 
+                        {{ form.frais_peage_retour(class="form-control", type="number", step="1", placeholder="0") }}
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Boutons -->
+            <div class="d-flex justify-content-between mt-4">
+                <button type="submit" class="btn btn-success px-4">Enregistrer les modifications</button>
+                <div>
+                    <button type="reset" class="btn btn-warning me-2">Réinitialiser</button>
+                    <a href="{{ url_for('main.afficher_decomptes') }}" class="btn btn-secondary">Annuler</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

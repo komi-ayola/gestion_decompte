@@ -1,0 +1,106 @@
+header {
+    /* position: fixed;
+    width: 100%; */
+    background-color: #007bff;
+    color: white;
+    padding: 5px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+}
+
+
+/* Positionner le footer en bas de la page */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Assure que le body prend toute la hauteur de l'écran */
+    margin: 0;
+    /* padding-top: 70px; */
+}
+
+main {
+    flex: 1; /* Permet au contenu principal de prendre l'espace restant */
+}
+
+footer {
+    position: fixed; /* Fixe le footer en bas */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #007bff; /* Couleur de fond */
+    color: white;
+    text-align: center;
+    padding: 1px 0;
+}
+
+h1 {
+    color: #333;
+}
+
+header h1 {
+    color: #ff5733; /* Orange */
+    font-size: 40px; /* Taille du texte */
+    font-weight: bold; /* Texte en gras */
+}
+
+.actions {
+    display: flex;  /* Affiche les boutons en ligne */
+    gap: 5px;  /* Espacement entre les boutons */
+}
+
+.pagination-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+}
+
+.page-item {
+    margin: 0 5px;
+}
+
+.page-link {
+    color: #007bff;
+    border: 1px solid #dee2e6;
+    padding: 5px 10px;
+    text-decoration: none;
+}
+
+.page-item.active .page-link {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.page-item.disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+    background-color: #f8f9fa;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.card {
+    width: 100%; /* Prend toute la largeur */
+    overflow-x: auto; /* Permet de scroller horizontalement si nécessaire */
+}

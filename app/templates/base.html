@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Gestion décomptes{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Luma décompte</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('main.index') }}">Accueil</a></li>
+                <li><a href="{{ url_for('main.afficher_decomptes') }}">Décomptes</a></li>
+                <li><a href="{{ url_for('main.afficher_personnel') }}">Personnel</a></li>
+                <li><a href="{{ url_for('main.afficher_responsables') }}">Responsables</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2025 AKMT - Tous droits réservés.</p>
+    </footer>
+</body>
+</html>

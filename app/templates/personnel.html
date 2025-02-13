@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Liste du personnel{% endblock %}
+
+{% block content %}
+<div class="container mt-1">
+    <h2 class="text-center text-primary">Liste du personnel</h2>
+    <div class="d-flex justify-content-between mb-3"> 
+        <a href="{{ url_for('main.ajouter_personnel') }}" class="btn btn-success">
+            <i class="fas fa-user-plus"></i>Ajouter un personnel
+        </a>
+    </div>
+     <div class="card shadow-lg p-2">
+        <table class="table table-striped table-hover mt-3">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Classe</th>
+                    <th>Poste</th>
+                    <th>Sexe</th>
+                    <th>Coût repas</th>
+                    <th>Coût logement</th>
+                    <th>Division régionale</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for employe in employes.items %}
+                <tr>
+                    <td>{{ employe.id }}</td>
+                    <td>{{ employe.nom }}</td>
+                    <td>{{ employe.prenom }}</td>
+                    <td>{{ employe.classe }}</td>
+                    <td>{{ employe.poste }}</td>
+                    <td>{{ employe.sexe }}</td>
+                    <td>{{ employe.cout_repas }} FCFA</td>
+                    <td>{{ employe.cout_logement }} FCFA</td>
+                    <td>{{ employe.division_regionale}}</td>
+                    <td class="actions">
+                        <a href="{{ url_for('main.modifier_personnel', personnel_id=employe.id) }}" class="btn btn-warning btn-sm">Modifier</a>
+                        <a href="{{ url_for('main.supprimer_personnel', personnel_id=employe.id) }}" class="btn btn-danger btn-sm"
+                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet employé ?');">
+                            Supprimer
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Pagination Section -->
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                {% if pagination.has_prev %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('main.afficher_personnel', page=pagination.prev_num) }}">Précédent</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link">Précédent</span>
+                    </li>
+                {% endif %}
+
+                {% for page_num in pagination.iter_pages(left_edge=2, right_edge=2, left_current=1, right_current=1) %}
+                    {% if page_num %}
+                        <li class="page-item {% if page_num == pagination.page %}active{% endif %}">
+                            <a class="page-link" href="{{ url_for('main.afficher_personnel', page=page_num) }}">{{ page_num }}</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled"><span class="page-link">...</span></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if pagination.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('main.afficher_personnel', page=pagination.next_num) }}">Suivant</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link">Suivant</span>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+
+        <div class="text-center mt-4">
+            <!-- <p>URL de retour : {{ url_for('main.index') }}</p> -->
+            <a href="{{ url_for('main.index') }}" class="btn btn-primary">Retour à l'accueil</a>
+        </div>
+    </div>
+    <!-- <div class="text-center mt-4" style="border: 1px solid red; padding: 10px;">
+        <a href="{{ url_for('main.index') }}" class="btn btn-primary">Retour à l'accueil</a>
+    </div> -->
+    
+</div>
+ {% endblock %}

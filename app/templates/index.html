@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center text-primary">Bienvenue dans l'application de gestion des décomptes</h1>
+
+    <div class="text-center mt-5">
+        <a href="/decomptes" class="btn btn-success">Voir les décomptes</a>
+        <a href="/nouveau_decompte" class="btn btn-primary">Créer un nouveau décompte</a>
+        <a href="/personnel" class="btn btn-info">Voir le personnel</a>
+        <a href="/responsables" class="btn btn-warning">Voir les responsables</a>
+    </div>
+</div>
+
+{% endblock %}

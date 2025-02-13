@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-1 d-flex justify-content-center">
+    <div class="card p-4 shadow-lg w-75">
+        <h1 class="text-center text-primary">Ajouter un responsable</h1>
+
+        <form method="POST" action="{{ url_for('main.ajouter_responsable') }}" class="mt-4">
+            {{ form.hidden_tag() }}
+
+            <!-- Informations Générales -->
+            <fieldset class="border p-3 mb-3">
+                <legend class="w-auto text-success">Informations générales</legend>
+                <div class="row">
+                    <div class="col-md-4 mb-2">
+                        {{ form.nom.label }} {{ form.nom(class="form-control") }}
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        {{ form.prenom.label }} {{ form.prenom(class="form-control") }}
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Détails du Poste -->
+            <fieldset class="border p-3 mb-2">
+                <legend class="w-auto text-success">Détails du poste</legend>
+                <div class="row">
+                    <div class="col-md-4 mb-2">
+                        {{ form.fonction.label }} {{ form.fonction(class="form-control") }}
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        {{ form.division.label }} {{ form.division(class="form-control") }}
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Statut -->
+            <fieldset class="border p-3 mb-2">
+                <legend class="w-auto text-success">Statut</legend>
+                <div class="form-check">
+                    {{ form.actif(class="form-check-input", id="actif") }} 
+                    {{ form.actif.label(class="form-check-label") }}
+                </div>
+                <div class="form-check">
+                    {{ form.interim(class="form-check-input", id="interim") }} 
+                    {{ form.interim.label(class="form-check-label") }}
+                </div>
+            </fieldset>
+
+            <!-- Intérimaire -->
+            <fieldset class="border p-3 mb-1">
+                <legend class="w-auto text-success">Intérimaire</legend>
+                <div class="row">
+                    <div class="col-md-4 mb-2">
+                        {{ form.interimaire_id.label }} 
+                        {{ form.interimaire_id(class="form-control", id="interimaire_id") }}
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Boutons -->
+            <div class="d-flex justify-content-between mt-4">
+                <button type="submit" class="btn btn-primary px-4">Enregistrer</button>
+                <div>
+                    <button type="reset" class="btn btn-warning me-2">Réinitialiser</button>
+                    <a href="/" class="btn btn-secondary">Annuler</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let actifCheckbox = document.getElementById("actif");
+    let interimCheckbox = document.getElementById("interim");
+    let interimaireSelect = document.getElementById("interimaire_id");
+
+    function toggleInterimaire() {
+        if (interimCheckbox.checked) {
+            actifCheckbox.checked = false;
+            interimaireSelect.removeAttribute("disabled");
+        } else {
+            interimaireSelect.setAttribute("disabled", "disabled");
+            interimaireSelect.value = "";  // Réinitialiser
+        }
+    }
+
+    function toggleActif() {
+        if (actifCheckbox.checked) {
+            interimCheckbox.checked = false;
+            interimaireSelect.setAttribute("disabled", "disabled");
+            interimaireSelect.value = "";
+        }
+    }
+
+    interimCheckbox.addEventListener("change", toggleInterimaire);
+    actifCheckbox.addEventListener("change", toggleActif);
+    toggleInterimaire();
+});
+</script>
+    
+
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="card p-4 shadow-lg w-75">
+        <h1 class="text-center text-primary">Ajouter un personnel</h1>
+
+        <form method="POST" action="{{ url_for('main.ajouter_personnel') }}" class="mt-4">
+            {{ form.hidden_tag() }}
+
+            <fieldset class="border p-2 mb-3">
+                <legend class="w-auto text-success">Informations personnelles</legend>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        {{ form.nom.label }} {{ form.nom(class="form-control") }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        {{ form.prenom.label }} {{ form.prenom(class="form-control") }}
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="border p-2 mb-3">
+                <legend class="w-auto text-success">Informations professionnelles</legend>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        {{ form.classe.label }} {{ form.classe(class="form-control") }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        {{ form.poste.label }} {{ form.poste(class="form-control") }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        {{ form.sexe.label }} {{ form.sexe(class="form-select") }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        {{ form.division_regionale.label }} {{ form.division_regionale(class="form-control") }}
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="border p-2 mb-3">
+                <legend class="w-auto text-success">Frais</legend>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        {{ form.cout_repas.label }} {{ form.cout_repas(class="form-control") }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        {{ form.cout_logement.label }} {{ form.cout_logement(class="form-control") }}
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="d-flex justify-content-between mt-4">
+                <button type="submit" class="btn btn-primary px-4">Enregistrer</button>
+                <div>
+                    <button type="reset" class="btn btn-warning me-2">Réinitialiser</button>
+                    <a href="/" class="btn btn-secondary">Annuler</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
