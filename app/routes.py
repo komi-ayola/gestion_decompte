@@ -22,21 +22,6 @@ def index():
 
 # Route pour afficher la liste du personnel
 @bp.route("/personnel")
-# def afficher_personnel():
-#     # Récupérer la page courante (par défaut 1)
-#     page = request.args.get('page', 1, type=int)
-    
-#     # Nombre d'éléments par page
-#     per_page = 10
-
-#     # Pagination via SQLAlchemy
-#     pagination = Personnel.query.paginate(page=page, per_page=per_page, error_out=False)
-    
-#     return render_template(
-#         "personnel.html",
-#         employes=pagination.items,#pagination.items,
-#         pagination=pagination  # Passer l'objet pagination au template
-#     )
 def afficher_personnel():
     # Récupérer la page courante (par défaut 1)
     page = request.args.get('page', 1, type=int)
