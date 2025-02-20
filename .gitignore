@@ -1,0 +1,31 @@
+# Exclure les environnements virtuels
+env/
+venv/
+
+# Exclure les fichiers de base de données locales
+*.sqlite3
+local.db
+
+# Exclure les fichiers de logs et caches
+*.log
+__pycache__/
+*.pyc
+*.pyo
+
+# Exclure les dépendances installées
+*.egg-info/
+dist/
+build/
+
+# Exclure les fichiers sensibles
+config.py
+instance/
+
+# Exclure les fichiers et dossiers de migration inutiles
+migrations/
+alembic/
+
+# Exclure les fichiers spécifiques à l'éditeur
+.vscode/
+.idea/
+.DS_Store
