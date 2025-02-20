@@ -56,23 +56,6 @@
                             <i class="fas fa-edit"></i> Modifier
                         </a>
 
-                        <!-- Formulaire Activer/Désactiver Intérim -->
-                        <!-- <form action="{{ url_for('main.activer_interim', responsable_id=responsable.id) }}" method="post" class="d-inline">
-                            <select name="interimaire" class="form-select form-select-sm d-inline w-auto" {% if not responsable.interim %}disabled{% endif %}>
-                                <option value="">Sélectionner...</option>
-                                {% for r in responsables %}
-                                    {% if r.id != responsable.id %}   Empêcher l'auto-sélection 
-                                        <option value="{{ r.id }}" {% if responsable.interimaire and responsable.interimaire.id == r.id %}selected{% endif %}>
-                                            {{ r.nom }} {{ r.prenom }}
-                                        </option>
-                                    {% endif %}
-                                {% endfor %}
-                            </select>
-                            <button type="submit" class="btn btn-info btn-sm">
-                                {% if responsable.interim %}Désactiver{% else %}Activer{% endif %}
-                            </button>
-                        </form> -->
-
                         <!-- Supprimer -->
                         <a href="{{ url_for('main.supprimer_responsable', responsable_id=responsable.id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Supprimer ce responsable ?');">
                             <i class="fas fa-trash-alt"></i> Supprimer
