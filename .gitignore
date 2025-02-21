@@ -18,7 +18,7 @@ dist/
 build/
 
 # Exclure les fichiers sensibles
-config.py
+#config.py
 instance/
 
 # Exclure les fichiers et dossiers de migration inutiles
