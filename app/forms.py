@@ -50,15 +50,15 @@ class ResponsableForm(FlaskForm):
     interim = BooleanField("En intérim ?")
 
     def coerce_interimaire(value):
-        if isinstance(value, int):  # Si c'est déjà un entier, on le garde
+        if isinstance(value, int):  
             return value
         return int(value) if value and str(value).isdigit() else None
 
 
     interimaire_id = SelectField(
         "Choisir l'intérimaire",
-        coerce=coerce_interimaire,  #  On gère `None` proprement
-        choices=[]  # Rempli dynamiquement
+        coerce=coerce_interimaire,  
+        choices=[]  
     )
 
     submit = SubmitField("Enregistrer")

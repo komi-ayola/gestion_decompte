@@ -365,7 +365,7 @@ def generer_pdf(decompte_id):
     y -= 10
     c.setFont("Helvetica-Bold", 12)
     
-    # Dessiner le fond en jaune (position x, y, largeur, hauteur)
+    # Coloration du fond en jaune (position x, y, largeur, hauteur)
     c.setFillColor(yellow)  
     c.rect(530, y - 5, 260, 20, fill=True, stroke=False)
 
@@ -507,7 +507,7 @@ def modifier_responsable(responsable_id):
     responsable = Responsable.query.get_or_404(responsable_id)
     form = ResponsableForm(obj=responsable)
 
-    #  CHOIX AVEC `None`
+
     form.interimaire_id.choices = [("", "Aucun")] + [
         (r.id, f"{r.nom} {r.prenom}") for r in Responsable.query.filter(Responsable.id != responsable.id).all()
     ]
@@ -521,7 +521,6 @@ def modifier_responsable(responsable_id):
         responsable.interim = form.interim.data
 
         #  CHANGEMENT IMPORTANT
-        #responsable.interimaire_id = form.interimaire_id.data if form.interimaire_id.data else None
         if form.interim.data and form.interimaire_id.data:
             responsable.interimaire_id = form.interimaire_id.data
         else:

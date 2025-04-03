@@ -43,7 +43,6 @@ class Responsable(db.Model):
     actif = db.Column(db.Boolean, default=True)
     interim = db.Column(db.Boolean, default=False)
 
-    # Assurez-vous que `nullable=True` pour éviter d'avoir 0 comme valeur par défaut
     interimaire_id = db.Column(db.Integer, db.ForeignKey('responsable.id'), nullable=True)  
     interimaire = db.relationship('Responsable', remote_side=[id], backref="interim_responsables")
 
