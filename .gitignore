@@ -22,10 +22,11 @@ build/
 instance/
 
 # Exclure les fichiers et dossiers de migration inutiles
-migrations/
 alembic/
 
 # Exclure les fichiers spécifiques à l'éditeur
 .vscode/
 .idea/
 .DS_Store
+
+*.pyc
